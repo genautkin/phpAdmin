@@ -1,10 +1,14 @@
 <?php 
 $data = [];
+
+
+
 if( isset($_POST['submit']) ){
   if(  empty($_POST['email']) || empty($_POST['password'])){
     $data['errorMessage'] = 'Please enter email and password';
     return;
   }
+
   if( $_POST['email'] === 'gena@gmail.com' && $_POST['password'] === '123'){
     if (isset($_POST['checkboxRememberMe'])) {
         $for_time = 60 * 60 * 24;
