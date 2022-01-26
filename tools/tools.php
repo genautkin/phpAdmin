@@ -38,7 +38,7 @@ function check_if_user_exists_and_return($user_name, $print_result = false) {
     $result = mysqli_query($link,$sql);
     //print result to understand it , remove it after
     //printSqlResult($result, $link);
-    if (!$result || $result->num_rows == 0 || $result->num_rows>1) {
+    if (!$result || $result->num_rows == 0) {
         return null;
     }
         // output data of each row to array

@@ -46,11 +46,10 @@ if( isset($_POST['registerSubmit']) ){
         }
         else{
             echo mysqli_error($link);
-            exit;
+            unset($_POST);
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit;    
         }
-      unset($_POST);
-      header("Location: ".$_SERVER['PHP_SELF']);
-      exit;
       
 }
 
