@@ -1,13 +1,7 @@
 <?php 
-if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
-        case 'addPost':
-            require './main/post.php';
-            break;
-        default:
-            require './main/main.php';
-            break;
-    }
+if (isset($_GET['addPost']) || isset($_GET['editPost'])) {
+    require './main/post.php';
+    return;
 }
 else {
     require './main/main.php';

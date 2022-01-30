@@ -10,15 +10,27 @@ if( isset($_POST['add_post']) ){
           $article = htmlspecialchars(mysqli_real_escape_string($link,$_POST['article']), ENT_QUOTES, 'UTF-8');
           $time = time();
           $userId = $_SESSION['user_id'];
-          $sql = "INSERT INTO posts VALUES (
-              NULL,
-              '$userId',
-              '$title',
-              '$article',
-              '$time')";
+          if (isset($_GET['editPost']) && !isset($_SESSION['dontUpdateCreate'])) {
+           $postId = $_GET['editPost'];   
+           $sql = "UPDATE posts
+           SET Title = '$title', Article = '$article', Time = '$time'
+           WHERE PostId=$postId;";
+          }
+          else {
+            if (isset($_SESSION['dontUpdateCreate'])){
+                unset($_SESSION['dontUpdateCreate']);
+            }
+            $sql = "INSERT INTO posts VALUES (
+                NULL,
+                '$userId',
+                '$title',
+                '$article',
+                '$time')";
+          }
           $result = mysqli_query($link, $sql);
           if( $result && mysqli_affected_rows($link) > 0 ){  
             unset($_POST);
+            $_SESSION['SuccessAlert'] = "Your post was successfully save";
             header('location: ./');
             }
             else{
