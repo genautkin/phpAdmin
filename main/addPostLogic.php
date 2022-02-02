@@ -12,7 +12,7 @@ if( isset($_POST['add_post']) ){
           $userId = $_SESSION['user_id'];
           if (isset($_GET['editPost']) && !isset($_SESSION['dontUpdateCreate'])) {
            $postId = $_GET['editPost'];   
-           $sql = "UPDATE posts
+           $sql = "UPDATE Posts
            SET Title = '$title', Article = '$article', Time = '$time'
            WHERE PostId=$postId;";
           }
@@ -20,7 +20,7 @@ if( isset($_POST['add_post']) ){
             if (isset($_SESSION['dontUpdateCreate'])){
                 unset($_SESSION['dontUpdateCreate']);
             }
-            $sql = "INSERT INTO posts VALUES (
+            $sql = "INSERT INTO Posts VALUES (
                 NULL,
                 '$userId',
                 '$title',
@@ -30,7 +30,7 @@ if( isset($_POST['add_post']) ){
           $result = mysqli_query($link, $sql);
           if( $result && mysqli_affected_rows($link) > 0 ){  
             unset($_POST);
-            $_SESSION['SuccessAlert'] = "Your post was successfully save";
+            setcookie('SuccessAlert',"Your post was successfully save");
             header('location: ./');
             }
             else{

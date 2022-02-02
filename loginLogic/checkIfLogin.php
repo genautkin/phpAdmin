@@ -7,4 +7,3 @@ session_start();
  }
 
 // _log($_SESSION['user_id']);
-    ?>

@@ -1,4 +1,3 @@
-<?php include './headerAndFooter/header.php' ?>
 <?php include './loginLogic/checkIfLogin.php' ?>
 <?php require 'uploadFiles/uploadAvatar.php' ?>
 <?php require 'main/addPostLogic.php' ?>
@@ -11,7 +10,7 @@ if (isset($_GET['addPost']) || isset($_GET['editPost'])) {
 }
 ?>
 
-
+<?php include './headerAndFooter/header.php' ?>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -53,13 +52,6 @@ if (isset($_GET['addPost']) || isset($_GET['editPost'])) {
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Components</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -321,10 +313,15 @@ if (isset($_GET['addPost']) || isset($_GET['editPost'])) {
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle"
-                                    <?php
-                                    echo (isset($_SESSION['user_id']) && file_exists("usersData/".$_SESSION['user_id']."/avatar")) ? "src='img/undraw_profile.svg'" : "src='img/undraw_profile.svg'" ?> >
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?=$_SESSION['user']['Email']?> </span>
+                                    <?php 
+                                        $avatarUrl = 'img/undraw_profile.svg';
+                                        if (isset($_SESSION['user_id']) && ($_SESSION['user']['Avatar'] !=NULL) &&
+                                        file_exists("uploads/".$_SESSION['user_id']."/".$_SESSION['user']['Avatar'])) {
+                                            $avatarUrl = "uploads/".$_SESSION['user_id']."/".$_SESSION['user']['Avatar'];
+                                        }
+                                     ?>
+                                    <img class="img-profile rounded-circle" src="<?php echo $avatarUrl ?>"> 
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -336,10 +333,6 @@ if (isset($_GET['addPost']) || isset($_GET['editPost'])) {
                                     <a class="dropdown-item" href="#">
                                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Activity Log
                                     </a>
                                     <a class="dropdown-item" href="#">
                                         <label for="file-input-avatar">
@@ -441,10 +434,6 @@ if (isset($_GET['addPost']) || isset($_GET['editPost'])) {
     <script>console.log("load index");</script>
     <?php require './tools/alerts.php' ?>
     <!-- Page level plugins -->
-    <?php 
-    if (isset($_SESSION['SuccessAlert'])){
-        unset($_SESSION['SuccessAlert']);
-    } ?>
 
 
 </body>
